@@ -83,7 +83,7 @@ Node* deleteAtEnd(Node *head){
     return head;
 }
 
-Node *deleteAtHead(Node *head){
+Node* deleteAtHead(Node *head){
     if(head->next == nullptr){
         head = nullptr;
         return head;
@@ -95,7 +95,7 @@ Node *deleteAtHead(Node *head){
     return head;
 }
 
-Node *deleteAtPos(Node *head, int pos){
+Node* deleteAtPos(Node *head, int pos){
     if (pos<=0){
         return head;
     }
@@ -122,6 +122,38 @@ Node *deleteAtPos(Node *head, int pos){
     return head;
 }
 
+// generate linkedlist from array
+Node* generateFromVector(vector<int> array){
+    if (array.size() == 0) {
+        return nullptr;
+    }
+
+    Node* head = new Node(array[0]);
+    Node* curr = head;
+    for (int i = 1; i < array.size(); i++){
+        Node* node = new Node(array[i]);
+        curr->next = node;
+        curr = curr->next;
+    } 
+    return head;
+}
+
+// reverse the linked list
+Node* reverse(Node* head){
+    if (head == nullptr || head->next == nullptr) return head;
+
+    Node* temp = nullptr;
+    Node* temp2 = nullptr;
+    while(head != nullptr){
+        temp2 = head->next;
+        head->next = temp;
+        temp = head;
+        head= temp2;
+    }
+    head = temp;
+    return head;
+} 
+
 int main(){
     Node *tail = new Node(5);
     Node *third= new Node(12, tail);
@@ -136,7 +168,7 @@ int main(){
     head = insertAtPos(head, 2, 2);
     displayList(head);
 
-    cout << "\n\n### Deleting from linkedlist ###" << endl;
+    cout << "\n### Deleting from linkedlist ###" << endl;
     head = deleteAtEnd(head);
     displayList(head);
     head = deleteAtHead(head);
@@ -144,7 +176,10 @@ int main(){
     head = deleteAtPos(head, 2);
     displayList(head);
 
-    
-    
+    cout << "\n### New Linked list and reversing it###" << endl;
+    head = generateFromVector({1,2,4,3,2,5,6});
+    displayList(head);
+    head = reverse(head);
+    displayList(head);
     return 0;
 }
