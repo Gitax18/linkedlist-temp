@@ -38,9 +38,9 @@ Node* generateFromVector(vector<int> array){
 Node* reverseBetween(Node* head, int left, int right) {
     if( head->next == nullptr || !head) return head;
 
-    Node* dummyHead = head; 
+    Node dummyHead = Node(0, head); 
 
-    Node* prevToLeft = dummyHead;
+    Node* prevToLeft = &dummyHead;
     Node* curr = head;
     for (int i = 1; i < left; i++){
         prevToLeft = curr;
@@ -58,7 +58,7 @@ Node* reverseBetween(Node* head, int left, int right) {
     prevToLeft->next->next = curr;
     prevToLeft->next = prev;
 
-    head = dummyHead;
+    head = dummyHead.next;
 
     return head;
 }
