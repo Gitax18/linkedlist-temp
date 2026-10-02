@@ -70,16 +70,81 @@ Node* insertAtPos(Node *head, int value, int pos){
     return head;
 }
 
+// deleting in linkedlist
+Node* deleteAtEnd(Node *head){
+    Node* curr = head;
+    if(head->next == nullptr){
+        head = nullptr;
+        return head;
+    }
+
+    while(curr->next->next != nullptr) curr = curr->next;
+    curr->next = nullptr;
+    return head;
+}
+
+Node *deleteAtHead(Node *head){
+    if(head->next == nullptr){
+        head = nullptr;
+        return head;
+    }
+
+    Node* temp = head;
+    head = head->next;
+    delete temp;
+    return head;
+}
+
+Node *deleteAtPos(Node *head, int pos){
+    if (pos<=0){
+        return head;
+    }
+    
+    if(pos == 1){
+        head = deleteAtHead(head);
+        return head;
+    }
+
+    Node *curr = head;
+    int currPos = 1;
+
+    while (currPos < pos-1 && curr->next != nullptr){
+        curr = curr->next;
+        currPos++;
+    }
+
+    if (curr->next != nullptr && currPos == pos-1){
+        Node *temp = curr->next;
+        curr->next = temp->next;
+        delete temp;
+        return head;
+    }
+    return head;
+}
+
 int main(){
     Node *tail = new Node(5);
     Node *third= new Node(12, tail);
     Node *second = new Node(15, third);
     Node *head = new Node(32, second);
 
+    cout << "### Inserting into linkedlist ###" << endl;
     head = insertAtEnd(head, 87);
-    head = insertAtHead(head, 1);
-    head = insertAtPos(head, 2, 2);
-
     displayList(head);
+    head = insertAtHead(head, 1);
+    displayList(head);
+    head = insertAtPos(head, 2, 2);
+    displayList(head);
+
+    cout << "\n\n### Deleting from linkedlist ###" << endl;
+    head = deleteAtEnd(head);
+    displayList(head);
+    head = deleteAtHead(head);
+    displayList(head);
+    head = deleteAtPos(head, 2);
+    displayList(head);
+
+    
+    
     return 0;
 }
