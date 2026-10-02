@@ -154,6 +154,45 @@ Node* reverse(Node* head){
     return head;
 } 
 
+// reverse the linkedlist from position left to position right
+Node* reverseBetween(Node* head, int left, int right) {
+    if (head == nullptr || left == right) {
+        return head;
+    }
+
+    int currPos = 1;
+    Node* curr = nullptr;              
+    Node* newHead = head;              
+    while (currPos != left) {
+        curr = newHead;
+        newHead = newHead->next;
+        currPos++;
+    }
+
+    Node* newTail = newHead;           
+    while (currPos != right) {
+        newTail = newTail->next;
+        currPos++;
+    }
+
+    Node* temp = newTail->next;        
+    Node* temp2 = nullptr;
+    while (currPos >= left) {          
+        temp2 = newHead->next;
+        newHead->next = temp;
+        temp = newHead;
+        newHead = temp2;
+        currPos--;
+    }
+
+    if (curr == nullptr) {             
+        head = newTail;
+    } else {
+        curr->next = newTail;
+    }
+    return head;
+}
+
 int main(){
     Node *tail = new Node(5);
     Node *third= new Node(12, tail);
@@ -180,6 +219,8 @@ int main(){
     head = generateFromVector({1,2,4,3,2,5,6});
     displayList(head);
     head = reverse(head);
+    displayList(head);
+    reverseBetween(head, 2,4);
     displayList(head);
     return 0;
 }
